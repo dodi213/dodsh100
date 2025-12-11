@@ -166,9 +166,7 @@ export default function Home() {
             className={`btn-100 w-1/2 h-auto py-4 text-xl font-medium ${activeTab === 'ABCD' ? 'active-100' : ''}`}
           >
             {/* Label A: Retains complex custom styling */}
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2 bg-yellow-400 border-yellow-400 text-gray-900 z-[2]">
-                A
-            </div>
+  
             <span>ABCD Selection</span>
           </button>
           
@@ -179,9 +177,7 @@ export default function Home() {
             className={`btn-100 w-1/2 h-auto py-4 text-xl font-medium ${activeTab === 'TEXT' ? 'active-100' : ''}`}
           >
             {/* Label B: Retains complex custom styling */}
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2 bg-gray-700 border-gray-700 text-gray-400 z-[2]">
-                B
-            </div>
+
             <span>Texte Affichage</span>
           </button>
           
