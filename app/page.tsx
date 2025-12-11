@@ -37,14 +37,15 @@ export default function Home() {
 
   // Helper function to determine the dynamic classes based on selection
   const getButtonClasses = (buttonId: ButtonSelection) => {
+    // Base classes for large buttons
     const baseClasses = 'text-white text-4xl font-bold py-12 transition-colors duration-200 ease-in-out w-full';
 
     if (selectedButton === buttonId) {
-      // Selected (Green background, White text)
-      return `${baseClasses} bg-green-500 hover:bg-green-600`;
+      // Selected: Green (Kept as requested)
+      return `${baseClasses} bg-green-500 hover:bg-green-400`;
     } else {
-      // Not Selected (Gray background, White text)
-      return `${baseClasses} bg-gray-500 hover:bg-gray-600`;
+      // Not Selected: Dark Blue (Theme color)
+      return `${baseClasses} bg-blue-700 hover:bg-blue-600`;
     }
   };
 
@@ -60,11 +61,11 @@ export default function Home() {
   const getTabClasses = (tabId: TabSelection) => {
     const baseClasses = 'py-2 px-4 text-xl font-medium transition-colors duration-200';
     if (activeTab === tabId) {
-      // Active tab: bold text, light border
-      return `${baseClasses} text-indigo-700 border-b-4 border-indigo-700`;
+      // Active tab: Gold text, Gold border
+      return `${baseClasses} text-yellow-400 border-b-4 border-yellow-400`;
     } else {
-      // Inactive tab: gray text, hover effect
-      return `${baseClasses} text-gray-500 hover:text-gray-700 border-b-4 border-transparent`;
+      // Inactive tab: Gray text
+      return `${baseClasses} text-gray-400 hover:text-yellow-400 border-b-4 border-transparent`;
     }
   };
 
@@ -89,9 +90,8 @@ export default function Home() {
           </div>
 
           {/* --- Selected Indicator --- */}
-          <div className="text-center mt-6 text-lg font-medium text-gray-700">
-            Votre sélection: <span className="font-bold text-green-600">
-              {/* FIX APPLIED HERE: Use the state variable selectedButton */}
+          <div className="text-center mt-6 text-lg font-medium text-gray-300">
+            Votre sélection: <span className="font-bold text-green-500">
               {selectedButton ? selectedButton : 'Aucune'} 
             </span>
           </div>
@@ -99,7 +99,8 @@ export default function Home() {
           {/* --- Reset Button --- */}
           <button
             onClick={handleReset}
-            className="mt-4 text-white text-xl font-medium py-4 bg-red-500 hover:bg-red-600 transition-colors duration-200 ease-in-out"
+            // Reset button theme: Gold/Yellow with Dark text
+            className="mt-4 text-gray-900 text-xl font-medium py-4 bg-yellow-500 hover:bg-yellow-400 transition-colors duration-200 ease-in-out"
           >
             Réinitialiser
           </button>
@@ -111,7 +112,8 @@ export default function Home() {
           {/* --- Display Submitted Text --- */}
           <div className="text-center min-h-[5rem]">
             {displayText && (
-              <p className="text-5xl font-extrabold text-green-600 animate-fadeIn">
+              // Display Text: Green (Kept as requested)
+              <p className="text-5xl font-extrabold text-green-500">
                 {displayText}
               </p>
             )}
@@ -122,8 +124,10 @@ export default function Home() {
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Type your text here..."
-            className="p-4 border-2 border-gray-300 focus:border-indigo-500 outline-none text-xl rounded-lg"
+            // Placeholder in French
+            placeholder="Écrivez votre texte ici..."
+            // Input styling updated for dark theme
+            className="p-4 border-2 border-gray-700 focus:border-yellow-400 outline-none text-xl rounded-lg bg-gray-800 text-white"
           />
 
           {/* --- Submit Button --- */}
@@ -131,10 +135,11 @@ export default function Home() {
             onClick={handleSubmitText}
             // Disable if input is empty
             disabled={!inputText.trim()}
-            className={`text-white text-xl font-medium py-4 rounded-lg transition-colors duration-200 ease-in-out
+            className={`text-gray-900 text-xl font-medium py-4 rounded-lg transition-colors duration-200 ease-in-out
               ${inputText.trim()
-                ? 'bg-indigo-500 hover:bg-indigo-600'
-                : 'bg-gray-400 cursor-not-allowed'
+                // Submit button theme: Gold/Yellow
+                ? 'bg-yellow-500 hover:bg-yellow-400'
+                : 'bg-gray-600 cursor-not-allowed text-gray-400'
               }`}
           >
             Confimer
@@ -148,14 +153,15 @@ export default function Home() {
   // --- Main Component Structure ---
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 md:p-24 bg-gray-100">
-      <div className="flex flex-col w-full max-w-xl bg-white p-8 rounded-xl shadow-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+    // Main background: Dark Blue (bg-blue-950)
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 md:p-24 bg-blue-950">
+      <div className="flex flex-col w-full max-w-xl p-8 rounded-xl shadow-2xl bg-gray-900 border border-yellow-400/50">
+        <h1 className="text-3xl font-bold mb-6 text-center text-yellow-400">
           100% Logique
         </h1>
 
         {/* --- Tab Navigation --- */}
-        <div className="flex border-b border-gray-200 mb-8">
+        <div className="flex border-b border-gray-700 mb-8">
           <button
             onClick={() => setActiveTab('ABCD')}
             className={getTabClasses('ABCD')}
