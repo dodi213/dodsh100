@@ -46,36 +46,14 @@ export default function Home() {
     }
   };
 
+  // NOTE: getTabClasses function removed as its functionality is now handled inline using btn-100
+
   // --- Handlers for TEXT Tab ---
 
   const handleSubmitText = () => {
     setDisplayText(inputText);
     setInputText('');
   };
-
-  // Helper function for tab button styling (Styled like the A, B, C, D options)
-  const getTabClasses = (tabId: TabSelection) => {
-    // Styling base: Dark background, border-gold, rounded
-    const baseClasses = 'relative w-1/2 py-4 px-2 text-center text-xl font-medium transition-colors duration-200 cursor-pointer rounded-lg border-2';
-    
-    // Label styling (A, B, C, D label)
-    const labelClasses = 'absolute -top-3 left-1/2 transform -translate-x-1/2 text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2';
-
-    if (activeTab === tabId) {
-      // Active tab: Bright Gold border, Gold text, Gold label background
-      return {
-          tab: `${baseClasses} bg-gray-800 border-yellow-400 text-yellow-400`,
-          label: `${labelClasses} bg-yellow-400 border-yellow-400 text-gray-900`
-      };
-    } else {
-      // Inactive tab: Darker border, Gray text, Dark label background
-      return {
-          tab: `${baseClasses} bg-gray-900 border-gray-700 text-gray-400 hover:border-yellow-400`,
-          label: `${labelClasses} bg-gray-700 border-gray-700 text-gray-400`
-      };
-    }
-  };
-
 
   // --- Render Components based on Active Tab ---
 
@@ -92,7 +70,15 @@ export default function Home() {
                 onClick={() => handleButtonClick(buttonId)}
                 className={getButtonClasses(buttonId)}
               >
-                {buttonId}
+                {/* Text wrapped in <span> for ABCD buttons (Required by btn-100 structure if using btn-100)
+                   However, since these buttons retain their specific colors, they still use getButtonClasses,
+                   but if you wanted btn-100 style here, they would need <span> wrapper and btn-100 class.
+                   We assume here you want to KEEP the Green/Blue color differentiation for A,B,C,D,
+                   so we only apply btn-100 to the Command buttons (Reset/Confirm) and Tabs.
+                   If you want the GOLD border on A,B,C,D, let me know!
+                   For now, the Reset button is updated:
+                */}
+                <span>{buttonId}</span>
               </button>
             ))}
           </div>
@@ -105,11 +91,12 @@ export default function Home() {
           </div>
 
           {/* --- Reset Button --- */}
+          {/* UPDATED: Uses btn-100 class and adds <span> wrapper */}
           <button
             onClick={handleReset}
-            className="mt-4 text-gray-900 text-xl font-medium py-4 bg-yellow-500 hover:bg-yellow-400 transition-colors duration-200 ease-in-out rounded-lg"
+            className="btn-100 mt-4 h-auto w-full py-4 text-xl font-medium"
           >
-            Réinitialiser
+            <span>Réinitialiser</span>
           </button>
         </div>
       );
@@ -139,18 +126,15 @@ export default function Home() {
           />
 
           {/* --- Submit Button --- */}
+          {/* UPDATED: Uses btn-100 class and adds <span> wrapper */}
           <button
             onClick={handleSubmitText}
             // Disable if input is empty
             disabled={!inputText.trim()}
-            className={`text-gray-900 text-xl font-medium py-4 rounded-lg transition-colors duration-200 ease-in-out
-              ${inputText.trim()
-                // Submit button theme: Gold/Yellow
-                ? 'bg-yellow-500 hover:bg-yellow-400'
-                : 'bg-gray-600 cursor-not-allowed text-gray-400'
-              }`}
+            className={`btn-100 h-auto w-full py-4 text-xl font-medium
+              ${!inputText.trim() ? 'opacity-65 cursor-not-allowed' : ''}`}
           >
-            Confirmer
+            <span>Confirmer</span>
           </button>
         </div>
       );
@@ -159,10 +143,6 @@ export default function Home() {
   };
 
   // --- Main Component Structure ---
-
-  // Get tab styles
-  const tabABCD = getTabClasses('ABCD');
-  const tabTEXT = getTabClasses('TEXT');
 
   return (
     // Main background: Dark Blue (bg-blue-950)
@@ -174,27 +154,35 @@ export default function Home() {
             <h1 className="text-2xl font-extrabold text-center text-yellow-400 tracking-wider uppercase">
                 100% Logique
             </h1>
-            {/* You could add a style element like the 80% circle here if needed */}
         </div>
         
         {/* --- Tab Navigation (Styled like the A, B, C, D options) --- */}
         <div className="flex justify-between space-x-4 mb-4">
           
-          {/* Option 1: ABCD */}
+          {/* Option 1: ABCD (UPDATED: Uses btn-100 class and custom styling) */}
           <button
             onClick={() => setActiveTab('ABCD')}
-            className={tabABCD.tab}
+            // Apply btn-100 class and conditional 'active' class
+            className={`btn-100 w-1/2 h-auto py-4 text-xl font-medium ${activeTab === 'ABCD' ? 'active-100' : ''}`}
           >
-            ABCD
+            {/* Label A: Retains complex custom styling */}
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2 bg-yellow-400 border-yellow-400 text-gray-900 z-[2]">
+                A
+            </div>
+            <span>ABCD Selection</span>
           </button>
           
-          {/* Option 2: TEXT */}
+          {/* Option 2: TEXT (UPDATED: Uses btn-100 class and custom styling) */}
           <button
             onClick={() => setActiveTab('TEXT')}
-            className={tabTEXT.tab}
+            // Apply btn-100 class and conditional 'active' class
+            className={`btn-100 w-1/2 h-auto py-4 text-xl font-medium ${activeTab === 'TEXT' ? 'active-100' : ''}`}
           >
-
-            Texte
+            {/* Label B: Retains complex custom styling */}
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2 bg-gray-700 border-gray-700 text-gray-400 z-[2]">
+                B
+            </div>
+            <span>Texte Affichage</span>
           </button>
           
         </div>

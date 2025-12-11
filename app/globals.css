@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------- */
+/* 1. THEME VARIABLES (BLUE/DARK) */
+/* ---------------------------------------------------- */
 :root {
-  --background: #313fde;
-  --foreground: #171717;
+  /* Dark Blue Background (similar to bg-blue-950) */
+  --background: #08103d;
+  /* Gold/Yellow Foreground for main text if needed */
+  --foreground: #facc15;
+  /* Fallback text color for dark background */
+  --text-primary: #ededed;
+  /* Dark color for button inner background */
+  --dark-inner: rgba(0, 0, 0, 0.842);
+  /* Gold colors for border gradient */
+  --gold-light: #ffd277;
+  --gold-dark: #77530a;
 }
 
 @theme inline {
@@ -12,15 +24,99 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Set dark scheme as default for the app's styling */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #08103d;
+    --foreground: #facc15;
   }
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text-primary); /* Use light text color for readability */
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------------------------------------------------- */
+/* 2. GOLD BORDER BUTTON STYLE (.btn-100) */
+/* ---------------------------------------------------- */
+.btn-100 {
+  /* Use full width/height set by Tailwind classes in React */
+  /* width: 140px; */
+  /* height: 40px; */
+
+  border: none;
+  border-radius: 10px;
+
+  /* Animated Gradient Border Effect */
+  background: linear-gradient(
+    to right,
+    var(--gold-dark),
+    var(--gold-light),
+    var(--gold-dark),
+    var(--gold-dark),
+    var(--gold-light),
+    var(--gold-dark)
+  );
+  background-size: 250%;
+  background-position: left;
+
+  color: var(--gold-light);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 1s;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  user-select: none;
+  font-size: 15px; /* Use size set by Tailwind in React component */
+}
+
+/* Inner dark panel to create the border effect */
+.btn-100::before {
+  position: absolute;
+  content: "";
+  color: var(--gold-light);
+  inset: 3px; /* Creates the border width */
+  border-radius: 8px;
+  background-color: var(--dark-inner); /* Dark inner background */
+}
+
+/* Text container (ensures text is above the ::before pseudo-element) */
+.btn-100 span {
+  z-index: 1;
+  display: block;
+}
+
+/* Hover animation */
+.btn-100:hover {
+  background-position: right;
+  transition-duration: 1s;
+}
+
+/* Ensure the inner panel stays dark on hover */
+.btn-100:hover::before {
+  background-position: right;
+  transition-duration: 1s;
+}
+
+/* Active press effect */
+.btn-100:active {
+  transform: scale(0.95);
+}
+
+/* Disabled style */
+.btn-100:disabled,
+/* Added style for the inactive buttons to look 'off' */
+.btn-100:disabled::before {
+  pointer-events: none;
+  opacity: 0.75;
+  color: #7e7e7e;
+  background: #444; /* Darker background when disabled */
+  box-shadow: none;
+  text-shadow: none;
 }
