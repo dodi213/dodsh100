@@ -90,9 +90,9 @@ export default function Home() {
 
           {/* --- Selected Indicator --- */}
           <div className="text-center mt-6 text-lg font-medium text-gray-700">
-            Currently Selected: <span className="font-bold text-green-600">
+            Votre sélection: <span className="font-bold text-green-600">
               {/* FIX APPLIED HERE: Use the state variable selectedButton */}
-              {selectedButton ? selectedButton : 'None'} 
+              {selectedButton ? selectedButton : 'Aucune'} 
             </span>
           </div>
 
@@ -101,7 +101,7 @@ export default function Home() {
             onClick={handleReset}
             className="mt-4 text-white text-xl font-medium py-4 bg-red-500 hover:bg-red-600 transition-colors duration-200 ease-in-out"
           >
-            Reset Selection
+            Réinitialiser
           </button>
         </div>
       );
@@ -137,7 +137,7 @@ export default function Home() {
                 : 'bg-gray-400 cursor-not-allowed'
               }`}
           >
-            Submit Text
+            Confimer
           </button>
         </div>
       );
@@ -151,7 +151,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-8 md:p-24 bg-gray-100">
       <div className="flex flex-col w-full max-w-xl bg-white p-8 rounded-xl shadow-2xl">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Interactive App
+          100% Logique
         </h1>
 
         {/* --- Tab Navigation --- */}
@@ -160,13 +160,13 @@ export default function Home() {
             onClick={() => setActiveTab('ABCD')}
             className={getTabClasses('ABCD')}
           >
-            Tab One (A, B, C, D)
+            ABCD
           </button>
           <button
             onClick={() => setActiveTab('TEXT')}
             className={getTabClasses('TEXT')}
           >
-            Text Input Tab
+            Texte
           </button>
         </div>
 
