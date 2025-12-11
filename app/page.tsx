@@ -16,9 +16,7 @@ export default function Home() {
   const [selectedButton, setSelectedButton] = useState<ButtonSelection>(null);
 
   // 3. TEXT Tab States:
-  // Tracks the current value of the text input field
   const [inputText, setInputText] = useState('');
-  // Tracks the submitted text to be displayed
   const [displayText, setDisplayText] = useState('');
 
   // Define the labels for the four main buttons
@@ -27,7 +25,6 @@ export default function Home() {
   // --- Handlers for ABCD Tab ---
 
   const handleButtonClick = (buttonId: ButtonSelection) => {
-    // Toggle behavior
     setSelectedButton(prev => (prev === buttonId ? null : buttonId));
   };
 
@@ -38,13 +35,13 @@ export default function Home() {
   // Helper function to determine the dynamic classes based on selection
   const getButtonClasses = (buttonId: ButtonSelection) => {
     // Base classes for large buttons
-    const baseClasses = 'text-white text-4xl font-bold py-12 transition-colors duration-200 ease-in-out w-full';
+    const baseClasses = 'text-white text-4xl font-bold py-12 transition-colors duration-200 ease-in-out w-full rounded-lg';
 
     if (selectedButton === buttonId) {
-      // Selected: Green (Kept as requested)
+      // Selected: Green 
       return `${baseClasses} bg-green-500 hover:bg-green-400`;
     } else {
-      // Not Selected: Dark Blue (Theme color)
+      // Not Selected: Dark Blue 
       return `${baseClasses} bg-blue-700 hover:bg-blue-600`;
     }
   };
@@ -52,20 +49,30 @@ export default function Home() {
   // --- Handlers for TEXT Tab ---
 
   const handleSubmitText = () => {
-    // Set the submitted text and clear the input field
     setDisplayText(inputText);
     setInputText('');
   };
 
-  // Helper function for tab button styling
+  // Helper function for tab button styling (Styled like the A, B, C, D options)
   const getTabClasses = (tabId: TabSelection) => {
-    const baseClasses = 'py-2 px-4 text-xl font-medium transition-colors duration-200';
+    // Styling base: Dark background, border-gold, rounded
+    const baseClasses = 'relative w-1/2 py-4 px-2 text-center text-xl font-medium transition-colors duration-200 cursor-pointer rounded-lg border-2';
+    
+    // Label styling (A, B, C, D label)
+    const labelClasses = 'absolute -top-3 left-1/2 transform -translate-x-1/2 text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full border-2';
+
     if (activeTab === tabId) {
-      // Active tab: Gold text, Gold border
-      return `${baseClasses} text-yellow-400 border-b-4 border-yellow-400`;
+      // Active tab: Bright Gold border, Gold text, Gold label background
+      return {
+          tab: `${baseClasses} bg-gray-800 border-yellow-400 text-yellow-400`,
+          label: `${labelClasses} bg-yellow-400 border-yellow-400 text-gray-900`
+      };
     } else {
-      // Inactive tab: Gray text
-      return `${baseClasses} text-gray-400 hover:text-yellow-400 border-b-4 border-transparent`;
+      // Inactive tab: Darker border, Gray text, Dark label background
+      return {
+          tab: `${baseClasses} bg-gray-900 border-gray-700 text-gray-400 hover:border-yellow-400`,
+          label: `${labelClasses} bg-gray-700 border-gray-700 text-gray-400`
+      };
     }
   };
 
@@ -75,7 +82,8 @@ export default function Home() {
   const renderContent = () => {
     if (activeTab === 'ABCD') {
       return (
-        <div className="flex flex-col space-y-4 w-full">
+        <div className="flex flex-col space-y-4 w-full pt-4">
+          
           {/* --- 4 Big Buttons (A, B, C, D) --- */}
           <div className="grid grid-cols-2 gap-4">
             {buttons.map((buttonId) => (
@@ -99,8 +107,7 @@ export default function Home() {
           {/* --- Reset Button --- */}
           <button
             onClick={handleReset}
-            // Reset button theme: Gold/Yellow with Dark text
-            className="mt-4 text-gray-900 text-xl font-medium py-4 bg-yellow-500 hover:bg-yellow-400 transition-colors duration-200 ease-in-out"
+            className="mt-4 text-gray-900 text-xl font-medium py-4 bg-yellow-500 hover:bg-yellow-400 transition-colors duration-200 ease-in-out rounded-lg"
           >
             Réinitialiser
           </button>
@@ -108,11 +115,12 @@ export default function Home() {
       );
     } else if (activeTab === 'TEXT') {
       return (
-        <div className="flex flex-col space-y-6 w-full">
+        <div className="flex flex-col space-y-6 w-full pt-4">
+
           {/* --- Display Submitted Text --- */}
           <div className="text-center min-h-[5rem]">
             {displayText && (
-              // Display Text: Green (Kept as requested)
+              // Display Text: Green
               <p className="text-5xl font-extrabold text-green-500">
                 {displayText}
               </p>
@@ -142,7 +150,7 @@ export default function Home() {
                 : 'bg-gray-600 cursor-not-allowed text-gray-400'
               }`}
           >
-            Confimer
+            Confirmer
           </button>
         </div>
       );
@@ -152,28 +160,43 @@ export default function Home() {
 
   // --- Main Component Structure ---
 
+  // Get tab styles
+  const tabABCD = getTabClasses('ABCD');
+  const tabTEXT = getTabClasses('TEXT');
+
   return (
     // Main background: Dark Blue (bg-blue-950)
     <main className="flex min-h-screen flex-col items-center justify-center p-8 md:p-24 bg-blue-950">
       <div className="flex flex-col w-full max-w-xl p-8 rounded-xl shadow-2xl bg-gray-900 border border-yellow-400/50">
-        <h1 className="text-3xl font-bold mb-6 text-center text-yellow-400">
-          100% Logique
-        </h1>
-
-        {/* --- Tab Navigation --- */}
-        <div className="flex border-b border-gray-700 mb-8">
+        
+        {/* --- 100% Logique Title Bar (Styled like the quiz bar) --- */}
+        <div className="bg-gray-800 border-2 border-yellow-500 p-4 mb-8 rounded-lg shadow-xl relative">
+            <h1 className="text-2xl font-extrabold text-center text-yellow-400 tracking-wider uppercase">
+                100% Logique
+            </h1>
+            {/* You could add a style element like the 80% circle here if needed */}
+        </div>
+        
+        {/* --- Tab Navigation (Styled like the A, B, C, D options) --- */}
+        <div className="flex justify-between space-x-4 mb-4">
+          
+          {/* Option 1: ABCD */}
           <button
             onClick={() => setActiveTab('ABCD')}
-            className={getTabClasses('ABCD')}
+            className={tabABCD.tab}
           >
             ABCD
           </button>
+          
+          {/* Option 2: TEXT */}
           <button
             onClick={() => setActiveTab('TEXT')}
-            className={getTabClasses('TEXT')}
+            className={tabTEXT.tab}
           >
+
             Texte
           </button>
+          
         </div>
 
         {/* --- Tab Content --- */}
